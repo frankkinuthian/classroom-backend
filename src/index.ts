@@ -1,6 +1,7 @@
 import express from "express";
 import subjectsRouter from "./routes/subjects";
 import cors from "cors";
+import securityMiddleware from "./middleware/security";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -18,12 +19,16 @@ app.use(
 
 app.use(express.json());
 
+// Request logging middleware
+app.use(securityMiddleware);
+
 if (LOG_REQUESTS) {
   app.use((req, res, next) => {
     const startedAt = process.hrtime.bigint();
 
     res.on("finish", () => {
-      const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
+      const durationMs =
+        Number(process.hrtime.bigint() - startedAt) / 1_000_000;
 
       const safeUrl = req.originalUrl.split("?")[0];
       console.log(
