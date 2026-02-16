@@ -25,8 +25,9 @@ if (LOG_REQUESTS) {
     res.on("finish", () => {
       const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
 
+      const safeUrl = req.originalUrl.split("?")[0];
       console.log(
-        `[${new Date().toISOString()}] ${req.method} ${req.originalUrl} -> ${res.statusCode} (${durationMs.toFixed(1)}ms)`,
+        `[${new Date().toISOString()}] ${req.method} ${safeUrl} -> ${res.statusCode} (${durationMs.toFixed(1)}ms)`,
       );
     });
 
