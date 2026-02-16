@@ -19,7 +19,7 @@ app.use(
 
 app.use(express.json());
 
-// Request logging middleware
+// Security middleware
 app.use(securityMiddleware);
 
 if (LOG_REQUESTS) {
