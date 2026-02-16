@@ -10,10 +10,10 @@ This directory contains a Postman collection for the current backend routes.
 
 Your backend currently has two app entry files:
 
-- `src/server.ts`: serves only `GET /`
-- `src/index.ts`: serves `GET /` and mounts `GET /api/subjects`
+- `src/index.ts`: active app entry; serves `GET /` and mounts `GET /api/subjects`
+- `src/server.ts`: still exists, but only serves `GET /`
 
-`package.json` scripts currently run `src/server.ts` for `dev` and `dist/server.js` for `start`, so `/api/subjects` will only be available if you run the app via `src/index.ts`.
+`package.json` scripts run `src/index.ts` for `dev` and `dist/index.js` for `start`, so running `npm run dev`, `npm start`, or `npx tsx src/index.ts` exposes both `GET /` and `GET /api/subjects`.
 
 ## How to run for full collection coverage
 
