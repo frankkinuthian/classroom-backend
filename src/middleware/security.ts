@@ -50,7 +50,7 @@ const securityMiddleware = async (
       method: req.method,
       url: req.originalUrl ?? req.url,
       socket: {
-        remoteAddress: req.socket.remoteAddress ?? req.ip ?? "0.0.0.0",
+        remoteAddress: req.ip ?? req.socket.remoteAddress ?? "0.0.0.0",
       },
     };
 
