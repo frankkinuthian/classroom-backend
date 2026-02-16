@@ -43,7 +43,11 @@ router.get("/", async (req, res) => {
       .leftJoin(departments, eq(subjects.departmentId, departments.id))
       .where(whereClause);
 
-    const totalCount = countResult[0]?.count ?? 0;
+    const rawCount = countResult[0]?.count ?? 0;
+    const totalCount = Number(rawCount);
+    if (!Number.isFinite(totalCount)) {
+      throw new Error("Invalid count returned from database");
+    }
 
     // Fetch page data with department nested under each subject row.
     const subjectsList = await db
