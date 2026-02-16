@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
 
     const rawCount = countResult[0]?.count ?? 0;
     const totalCount = Number(rawCount);
-    if (!Number.isFinite(totalCount)) {
+    if (!Number.isFinite(totalCount) || !Number.isSafeInteger(totalCount)) {
       throw new Error("Invalid count returned from database");
     }
 
