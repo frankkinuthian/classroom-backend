@@ -5,6 +5,28 @@ import { db } from "../db";
 
 const router = express.Router();
 
+const getErrorDetails = (error: unknown) => {
+  if (error instanceof Error) {
+    const maybeCause =
+      error.cause instanceof Error
+        ? {
+            name: error.cause.name,
+            message: error.cause.message,
+            stack: error.cause.stack,
+          }
+        : error.cause;
+
+    return {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+      cause: maybeCause,
+    };
+  }
+
+  return { error };
+};
+
 // / Get all subjects with optional filtering & pagination
 router.get("/", async (req, res) => {
   try {
@@ -74,7 +96,7 @@ router.get("/", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error(`GET /subjects error: ${error}`);
+    console.error("GET /subjects error", getErrorDetails(error));
     res.status(500).json({ error: "Failed to fetch subjects" });
   }
 });
