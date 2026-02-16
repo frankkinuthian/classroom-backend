@@ -10,11 +10,27 @@ import { departments } from "./db/schema/index.js";
 async function main() {
   try {
     console.log("Performing CRUD operations...");
+    const demoDepartmentCode = "ADMIN-DEMO";
+
+    const [existingDepartment] = await db
+      .select({ id: departments.id })
+      .from(departments)
+      .where(eq(departments.code, demoDepartmentCode))
+      .limit(1);
+
+    if (existingDepartment) {
+      await db
+        .delete(departments)
+        .where(eq(departments.id, existingDepartment.id));
+      console.log(
+        `CLEANUP: Removed existing department with code ${demoDepartmentCode}.`,
+      );
+    }
 
     const [newDepartment] = await db
       .insert(departments)
       .values({
-        code: "ADMIN-DEMO",
+        code: demoDepartmentCode,
         name: "Administration",
         description: "Demo department for CRUD testing",
       })
