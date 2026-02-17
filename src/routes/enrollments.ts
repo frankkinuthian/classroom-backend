@@ -12,6 +12,14 @@ import {
 
 const router = express.Router();
 
+const getPublicUserColumns = () => ({
+  id: user.id,
+  name: user.name,
+  image: user.image,
+  role: user.role,
+  imageCldPubId: user.imageCldPubId,
+});
+
 const getEnrollmentDetails = async (enrollmentId: number) => {
   const [enrollment] = await db
     .select({
@@ -26,7 +34,7 @@ const getEnrollmentDetails = async (enrollmentId: number) => {
         ...getTableColumns(departments),
       },
       teacher: {
-        ...getTableColumns(user),
+        ...getPublicUserColumns(),
       },
     })
     .from(enrollments)
