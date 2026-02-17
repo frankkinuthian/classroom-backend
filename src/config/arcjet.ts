@@ -25,7 +25,7 @@ const aj = arcjet({
     slidingWindow({
       mode: "LIVE",
       interval: "2s", // Refill every 2 seconds
-      max: 5, // Allow 5 requests per interval
+      max: 50, // Allow 5 requests per interval
     }),
   ],
 });
