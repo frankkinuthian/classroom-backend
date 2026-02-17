@@ -1,3 +1,8 @@
+//  APM insight initialization
+import("apminsight")
+  .then(({ default: AgentAPI }) => AgentAPI.config())
+  .catch(() => console.log("APM not available in this environment"));
+
 import express from "express";
 import subjectsRouter from "./routes/subjects";
 import cors from "cors";
